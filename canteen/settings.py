@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-bq)&$ofmz3vl906a))ehfa1(786ea$8p0e*_3hs5d_i6rakuvi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "canteen-staff-management.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
