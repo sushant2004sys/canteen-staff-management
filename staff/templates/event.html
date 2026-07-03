@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Events{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h3>🎉 Event Management</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Client Name</label>
+                    <input type="text" name="client_name" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Event Name</label>
+                    <input type="text" name="event_name" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Date</label>
+                    <input type="date" name="event_date" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Time</label>
+                    <input type="time" name="event_time" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Required Staff</label>
+                    <input type="number" name="required_staff" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Location</label>
+                    <input type="text" name="location" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Payment</label>
+                    <input type="number" name="payment" class="form-control" required>
+                </div>
+
+            </div>
+
+            <button class="btn btn-success">
+                ➕ Save Event
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<hr>
+
+<div class="card shadow">
+
+<div class="card-header bg-dark text-white">
+
+<h4>Event List</h4>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Client</th>
+
+<th>Event</th>
+
+<th>Date</th>
+
+<th>Location</th>
+
+<th>Staff</th>
+
+<th>Payment</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for e in events %}
+
+<tr>
+
+<td>{{ e.client_name }}</td>
+
+<td>{{ e.event_name }}</td>
+
+<td>{{ e.event_date }}</td>
+
+<td>{{ e.location }}</td>
+
+<td>{{ e.required_staff }}</td>
+
+<td>₹ {{ e.payment }}</td>
+
+<td>{{ e.status }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="7" class="text-center">
+
+No Events Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

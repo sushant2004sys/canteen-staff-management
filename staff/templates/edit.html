@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Staff</title>
+</head>
+<body>
+
+<h2>Edit Staff</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" value="{{ staff.name }}" required><br><br>
+
+    <input type="text" name="mobile" value="{{ staff.mobile }}" required><br><br>
+
+    <textarea name="address" required>{{ staff.address }}</textarea><br><br>
+
+    <input type="number" name="salary" value="{{ staff.salary }}" required><br><br>
+
+    <button type="submit">Update Staff</button>
+
+</form>
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+</html>

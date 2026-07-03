@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Management{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2 class="fw-bold">👨‍🍳 Staff Management</h2>
+        <div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white shadow">
+            <div class="card-body text-center">
+                <h5>Total Staff</h5>
+                <h2>{{ total_staff }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white shadow">
+            <div class="card-body text-center">
+                <h5>Present Today</h5>
+                <h2>{{ present_today }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white shadow">
+            <div class="card-body text-center">
+                <h5>Absent Today</h5>
+                <h2>{{ absent_today }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark shadow">
+            <div class="card-body text-center">
+                <h5>Total Salary</h5>
+                <h2>₹{{ total_salary }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+        <p class="text-muted">Manage your canteen staff.</p>
+    </div>
+
+    <div class="col-md-4 text-end">
+        <a href="/attendance/" class="btn btn-warning">
+            📅 Attendance
+        </a>
+
+        <a href="/salary/" class="btn btn-success">
+            💰 Salary
+        </a>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">➕ Add New Staff</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST" action="/add/">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control"
+                           name="name"
+                           placeholder="Enter Name" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control"
+                           name="mobile"
+                           placeholder="Enter Mobile" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <textarea class="form-control"
+                              name="address"
+                              placeholder="Enter Address"
+                              rows="2"
+                              required></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <input type="number"
+                           class="form-control"
+                           name="salary"
+                           placeholder="Enter Salary"
+                           required>
+                </div>
+
+            </div>
+
+            <button class="btn btn-primary">
+                ➕ Add Staff
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">👨 Staff List</h5>
+    </div>
+
+    <div class="card-body">
+
+        <form method="GET" action="/" class="row mb-3">
+
+            <div class="col-md-10">
+                <input type="text"
+                       class="form-control"
+                       name="search"
+                       value="{{ query }}"
+                       placeholder="Search by Name or Mobile">
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+
+        </form>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Salary</th>
+                    <th width="170">Action</th>
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for staff in staffs %}
+
+                <tr>
+
+                    <td>{{ staff.id }}</td>
+
+                    <td>{{ staff.name }}</td>
+
+                    <td>{{ staff.mobile }}</td>
+
+                    <td>{{ staff.address }}</td>
+
+                    <td>₹ {{ staff.salary }}</td>
+
+                    <td>
+
+                        <a href="/edit/{{ staff.id }}"
+                           class="btn btn-warning btn-sm">
+                            ✏ Edit
+                        </a>
+
+                        <a href="/delete/{{ staff.id }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this staff?')">
+                            🗑 Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6" class="text-center">
+                        No Staff Found
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

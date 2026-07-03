@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance{% endblock %}
+
+{% block content %}
+
+<div class="card shadow mb-4">
+    <div class="card-header bg-warning">
+        <h3 class="mb-0">📅 Attendance Management</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <label class="form-label">Staff</label>
+
+                    <select name="staff" class="form-select" required>
+
+                        {% for staff in staffs %}
+                        <option value="{{ staff.id }}">
+                            {{ staff.name }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label class="form-label">Date</label>
+
+                    <input type="date"
+                           name="date"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label class="form-label">Status</label>
+
+                    <select name="status" class="form-select">
+
+                        <option value="Present">✅ Present</option>
+
+                        <option value="Absent">❌ Absent</option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label>&nbsp;</label>
+
+                    <button class="btn btn-success w-100">
+                        Save Attendance
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="card shadow">
+
+    <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">Attendance Records</h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                <tr>
+
+                    <th>Staff</th>
+
+                    <th>Date</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for a in attendance_list %}
+
+                <tr>
+
+                    <td>{{ a.staff.name }}</td>
+
+                    <td>{{ a.date }}</td>
+
+                    <td>
+
+                        {% if a.status == "Present" %}
+
+                        <span class="badge bg-success">
+                            Present
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+                            Absent
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="3" class="text-center">
+
+                        No Attendance
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

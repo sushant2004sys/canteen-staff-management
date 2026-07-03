@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Salary{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+<div class="card-header bg-success text-white">
+
+<h3 class="mb-0">
+
+💰 Salary Report
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<div class="row mb-3">
+
+<div class="col-md-6">
+
+<form method="GET">
+
+<input type="month"
+
+name="month"
+
+class="form-control"
+
+value="{{ selected_month }}">
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-primary">
+
+Filter
+
+</button>
+
+</div>
+
+<div class="col-md-4 text-end">
+
+<a href="{% url 'salary_pdf' %}"
+
+class="btn btn-danger">
+
+📄 PDF
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Name</th>
+
+<th>Salary</th>
+
+<th>Present</th>
+
+<th>Absent</th>
+
+<th>Payable</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for r in report %}
+
+<tr>
+
+<td>{{ r.staff.name }}</td>
+
+<td>₹ {{ r.staff.salary }}</td>
+
+<td>{{ r.present }}</td>
+
+<td>{{ r.absent }}</td>
+
+<td>
+
+<b class="text-success">
+
+₹ {{ r.payable }}
+
+</b>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
